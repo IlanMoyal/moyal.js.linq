@@ -4,13 +4,14 @@
  * Synchronizes package.json from build/package.template.jsonc and project.settings.jsonc
  */
 
-import settingsAccessor from "./include/settings-accessor.js";
+import SettingsAccessor from "./include/settings-accessor.js";
 import jsonc from "comment-json";
 
 function applyTemplate(template, values) {
     template = JSON.stringify(jsonc.parse(template)); /* remove all comments */
 
     // Perform interpolation
+    let publishInterpolated = "";
     let interpolated = template.replace(/{{(\w+)}}/g, (_, key) => {
         return values[key] ?? `{{${key}}}`;
     });
@@ -32,18 +33,25 @@ function applyTemplate(template, values) {
         * JSON.parse(interpolated) - Validate the output is still valid JSON 
         * JSON.stringify(...) - beautify the result
         */
-        interpolated = JSON.stringify(JSON.parse(interpolated), null, 2);
+       let pkg = JSON.parse(interpolated);
+       interpolated = JSON.stringify(pkg, null, 2);
+       
+       /* no scripts in publish version */
+       publishInterpolated = JSON.stringify(SettingsAccessor.preparePackageForPublish(pkg), null, 2);
+
     } catch (err) {
         throw new Error(`Interpolated package.json is invalid: ${err.message}`);
     }
 
-    return interpolated;
+    return {"packageJson": interpolated, "publishPackageJson": publishInterpolated};
 }
 
 function syncPackageJson() {
-    settingsAccessor.validateAllFilesExistOrThrow();
-    settingsAccessor.packageJson = applyTemplate(settingsAccessor.packageTemplateJson, settingsAccessor.projectSettings);
-    console.log(`Synced ${settingsAccessor.packageFilename} from ${settingsAccessor.projectSettingsFilename} and ${settingsAccessor.packageTemplateFilename}`);
+    SettingsAccessor.validateAllFilesExistOrThrow();
+    const json = applyTemplate(SettingsAccessor.packageTemplateJson, SettingsAccessor.projectSettings); 
+    SettingsAccessor.packageJson = json.packageJson;
+    SettingsAccessor.publishPackageJson = json.publishPackageJson;
+    console.log(`Synced ${SettingsAccessor.packageFilename} from ${SettingsAccessor.projectSettingsFilename} and ${SettingsAccessor.packageTemplateFilename}`);
 }
 
 syncPackageJson();

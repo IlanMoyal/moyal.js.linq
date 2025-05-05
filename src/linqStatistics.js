@@ -12,17 +12,17 @@
  * 
  * @class
  */
-export default class Statistics {
+class Statistics {
 	#_count = 0;
-	#_minimum = 0.0;
-	#_maximum = 0.0;
-	#_range = 0;
-	#_average = 0;
+	#_minimum = undefined;
+	#_maximum = undefined;
+	#_range = undefined;
+	#_average = undefined;
 	#_summary = 0;
-	#_mode = 0;
-	#_median = 0;
-	#_variance = 0;
-	#_standardDeviation = 0;
+	#_mode = undefined;
+	#_median = undefined;
+	#_variance = undefined;
+	#_standardDeviation = undefined;
 
 	/**
 	 * Initializes a new instance of Statistics.
@@ -205,4 +205,69 @@ export default class Statistics {
 			json.standardDeviation ?? undefined
 		);
 	}
+
+	static #_areNumbersEqualUpToDigits(a, b, n) {
+		if(a == null && b == null)
+			return true;
+		
+		if(a == null || b == null)
+			return false;
+
+		// Handle full comparison if n is null/undefined
+		if (n == null) {
+			return a === b;
+		}
+	
+		if (typeof n !== 'number' || n < 0 || !Number.isFinite(n)) {
+			throw new Error('Invalid n: must be a non-negative finite number');
+		}
+	
+		if (!Number.isFinite(a) || !Number.isFinite(b)) {
+			return a === b;  // still allow Infinity comparisons
+		}
+	
+		const factor = 10 ** n;
+		return Math.round((a + Number.EPSILON) * factor) === Math.round((b + Number.EPSILON) * factor);
+	}
+
+	static #_areArraysEqual(a, b) {
+		// Treat null and undefined as equivalent
+		if (a == null && b == null) return true;
+		if (a == null || b == null) return false;
+	
+		if (a.length !== b.length) return false;
+	
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] !== b[i]) {
+				return false;
+			}
+		}
+	
+		return true;
+	}
+
+	/**
+	 * Returns `true` if the current object equal to the specified value.
+	 * 
+	 * @param {Statistics} value - `true` if the current object equal to the specified.
+	 * @param {number} precision - The number of digits after the decimal point to compare.
+	 */
+	equal(value, precision) {
+		const res = value != null 
+			&& this.count === value.count 
+			&& this.minimum === value.minimum
+			&& this.maximum === value.maximum 
+			&& Statistics.#_areNumbersEqualUpToDigits(this.summary, value.summary, precision)
+			&& Statistics.#_areNumbersEqualUpToDigits(this.average, value.average, precision)
+			&& Statistics.#_areNumbersEqualUpToDigits(this.range, value.range, precision)
+			&& Statistics.#_areNumbersEqualUpToDigits(this.median, value.median, precision)
+			&& Statistics.#_areNumbersEqualUpToDigits(this.variance, value.variance, precision)
+			&& Statistics.#_areNumbersEqualUpToDigits(this.standardDeviation, value.standardDeviation, precision);
+		
+		return res && Statistics.#_areArraysEqual(this.mode, value.mode);
+	}
 }
+
+export default Statistics;
+
+export { Statistics };

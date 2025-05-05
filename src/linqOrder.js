@@ -2,14 +2,14 @@
  * File: src/linqOrder.js
  */
 
-import TypeCheck from "./typeCheck";
-import Linq from "./Linq";
-import Errors from "./errors";
+import TypeCheck from "./typeCheck.js";
+import Linq from "./Linq.js";
+import Errors from "./errors.js";
 
 /**
  * Represents a LINQ-ordered iterable, allowing chained sorting with `thenBy` and `thenByDescending`.
  */
-export class LinqOrder extends Linq {
+class LinqOrder extends Linq {
 	static #_defaultComparer = (obj1, obj2) => obj1 > obj2 ? 1 : (obj1 < obj2 ? - 1 : 0);
 
 	#_thisArg = null;
@@ -29,8 +29,8 @@ export class LinqOrder extends Linq {
 	 */
 	constructor(iterable, keySelector, comparer, desc, thisArg) {
 		super(iterable, thisArg);
-		if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keySelector")); }
-		if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_comparer")); }
+		if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keySelector); }
+		if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_comparer); }
 
 		this.#_iterable = iterable;
 		this.#_thisArg = thisArg;
@@ -38,8 +38,8 @@ export class LinqOrder extends Linq {
 	}
 
 	static #_injectThenBy(instance, keySelector, comparer, desc) {
-		if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keySelector")); }
-		if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_comparer")); }
+		if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keySelector); }
+		if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_comparer); }
 		instance.#_orderByChain.push(this.#_createOrderByPredicate(keySelector, comparer, desc ? -1 : 1));
 		return instance;
 	}
@@ -96,3 +96,7 @@ export class LinqOrder extends Linq {
 	 */
 	thenByDescending(keySelector, comparer) { return LinqOrder.#_injectThenBy(this, keySelector, comparer, true); }
 }
+
+export default LinqOrder;
+
+export { LinqOrder };

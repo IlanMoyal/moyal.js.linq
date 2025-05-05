@@ -1,7 +1,10 @@
-#my ignored directories
+#my ignored directories and fils
+my-files/
 build/generated/
 packages/
 src/auto-generated/
+package.publish.json
+package.json.publish-backup
 
 # Logs
 logs

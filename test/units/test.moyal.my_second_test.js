@@ -2,24 +2,9 @@
  * File: test.moyal.exceptions.js
  */
 
+import { TestGroup } from "@moyal/js-test";
 
-/* ensures existence of globalThis */
-utils.fixGlobal();
-(function (global) {global.moyal = global.moyal || {};})(globalThis);
-
-/* import test library for browser or NodeJS environment. */
-let __moyalTest;
-if (typeof window !== 'undefined') {
-  // Browser
-  __moyalTest = await import('https://cdn.jsdelivr.net/npm/@moyal/js-test@1.1.1/dist/moyal.test.mjs');
-} else {
-  // Node.js (assumes installed via npm)
-  __moyalTest = await import('@moyal/js-test');
-}
-moyal.test = __moyalTest;
-
-
-export default new moyal.test.TestGroup("Exception Testing (Throws / NoThrows)")
+export default new TestGroup("Exception Testing (Throws / NoThrows)")
 	.groupStart("Basic Throws")
 		.throws("Throws basic error", () => { throw new Error("boom"); })
 		.throws("Throws specific error object", () => { throw new TypeError("wrong type"); })

@@ -1,7 +1,7 @@
 /*!
  * File: src/errors.js
  */
-export default class Errors {
+class Errors {
 	/*
 	* Error messages
 	*/
@@ -47,8 +47,7 @@ export default class Errors {
 	 * Exposes the error messages for better unit-test coding and other.
 	 */
 	static get Messages() { return this.#_errorMessages; }
+}
 
-	static getMessage(key) {
-		return this.#_errorMessages[key] ?? `Unknown error key: ${key}`;
-	}
-};
+export default Errors;
+export { Errors };

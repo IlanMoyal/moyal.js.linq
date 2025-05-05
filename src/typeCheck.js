@@ -5,7 +5,7 @@
 /**
  * Utility class for runtime type checking.
  */
-export default class TypeCheck {
+class TypeCheck {
 	/**
 	 * Checks if the value is a number (primitive or Number object).
 	 * @param {any} obj
@@ -65,4 +65,8 @@ export default class TypeCheck {
 		const tag = Object.prototype.toString.call(obj);
 		return (type === "object" || type === "function") && (tag === "[object Function]" || tag === "[object GeneratorFunction]");
 	}
-};
+}
+
+export default TypeCheck;
+
+export { TypeCheck };

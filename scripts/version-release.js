@@ -8,7 +8,17 @@ import settingsAccessor from "./include/settings-accessor.js";
 
 const __root = utils.getRootDirectory();
 
+// Check git status is clean
+function ensureGitClean() {
+  if (!utils.gitIsClean()) {
+      console.error("❌ Git working tree is dirty! Commit or stash changes before releasing.");
+      process.exit(1);
+  }
+}
+
 function smartReleaseVersion() {
+  ensureGitClean();
+
   const currentVersion = settingsAccessor.package.version;
   
   if (!currentVersion) {

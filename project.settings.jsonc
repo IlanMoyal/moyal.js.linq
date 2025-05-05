@@ -6,13 +6,18 @@
     "version": "1.0.0",
     "description": "The library description comes here.",
     "author": "Ilan Moyal",
+    "author:website": "https://www.moyal.es",
+    "author:twitter:username": "i_moyal",
+    "author:linkedin:username": "ilanam",
     "license": "MIT",
+    "license:short-text": "MIT License - free to use, modify, and distribute.",
     "sourceFolder": "src",
     "sourceFile": "index.js",
     "testFolder": "test",
+    "examplesFolder": "examples",
     "outputFolder": "./dist",
     "outputBaseFilename": "moyal.linq", // TODO: replace with library name
-    "outputExposedName": "moyalLinq", // TODO: replace with exposed library name (for UDM - don't include dot in name)
+    "outputExposedName": "MoyalLinq", // TODO: replace with exposed library name (for UDM - don't include dot in name)
     "devDependencies": {
         "@eslint/js": "^9.25.0",
         "@rollup/plugin-terser": "^0.4.3",
@@ -20,7 +25,39 @@
         "comment-json": "^4.2.5",
         "eslint": "^9.25.0",
         "globals": "^16.0.0",
+        "jsdoc": "^4.0.4",
+        "jsdoc-to-markdown": "^9.1.1",
         "rollup": "^3.0.0",
-        "@moyal/js-test": "^1.1.1",
-    }
+        "docdash": "^2.0.2",
+        "@moyal/js-test": "^2.1.7"
+    },
+    "git:repository-name": "moyal.js.linq",
+    "git:username": "IlanMoyal",
+    "keywords": [
+        "linq",
+        "query",
+        "javascript",
+        "typescript",
+        "data-processing",
+        "functional-programming",
+        "collection",
+        "array",
+        "list",
+        "iterator",
+        "enumerable",
+        "chaining",
+        "map",
+        "filter",
+        "reduce",
+        "aggregate",
+        "select",
+        "where",
+        "groupby",
+        "orderby",
+        "projection",
+        "pipeline",
+        "moyal",
+        "moyal.js.linq",
+        "moyal-linq"
+    ]
 }

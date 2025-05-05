@@ -20,10 +20,11 @@
  */
 
 
-import Linq from "./Linq";
-import LinqGroup from "./LinqGroup";
-import { LinqOrder } from "./LinqOrder";
+import Linq from "./Linq.js";
+import LinqGroup from "./LinqGroup.js";
+import LinqOrder from "./LinqOrder.js";
 
-Linq.__setup(LinqGroup, LinqOrder);
+Linq.__setup(LinqOrder, LinqGroup);
 
 export default Linq;
+export { Linq };

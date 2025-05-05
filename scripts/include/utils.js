@@ -84,5 +84,166 @@ export default class utils {
 			fs.mkdirSync(path.dirname(resolvedPath), { recursive: true });
 			fs.writeFileSync(resolvedPath, content);
 		} 
+	}	
+
+	static npmGetLoggedInUser() {
+		return execSync('npm whoami', { stdio: 'pipe' }).toString().trim();
+	}
+
+	static npmValidateLoggedIn() {
+		try {
+			const username = this.npmGetLoggedInUser();
+			console.log(`🔑 Logged in as: ${username}`);
+			return true;
+		} catch {
+			console.error('❌ Not logged in to npm. Please run: npm login');
+			return false;
+		}
+	}
+
+	static gitIsClean(includingUntracked){
+		if(includingUntracked === true) {
+			const status = execSync("git status --porcelain").toString();
+			return status.trim() === "";
+		}
+		else {
+			try {
+				execSync("git rev-parse --verify HEAD", { stdio: "ignore" });
+				execSync("git diff-index --quiet HEAD --", { stdio: "ignore" });
+				
+				return true;
+			} catch {
+				return false;
+			}
+		}
+	}
+
+	static gitTagExists(tag) {
+		try {
+			const output = execSync(`git tag -l "${tag}"`).toString().trim();
+			return output.length > 0;
+		} catch {
+			return false;
+		}
+	}
+
+	/**
+	 * Conditionally adds and commits a file if it has changed.
+	 * @param {string} filePath - Path to the file (relative to repo root).
+	 * @param {string} message - Commit message.
+	 */
+	static conditionallyCommitFile(filePath, message) {
+		try {
+			// Check if the file has changes compared to the index
+			execSync(`git diff --quiet ${filePath}`);
+			console.log(`✅ No changes in ${filePath}, skipping commit.`);
+		} catch {
+			// File has changes
+			console.log(`📄 ${filePath} changed. Committing...`);
+			execSync(`git add ${filePath}`);
+			execSync(`git commit -m "${message}"`);
+		}
+	}
+
+	/**
+	 * Conditionally adds and commits files in a directory if any have changed.
+	 * @param {string} dirPath - Path to the directory (relative to repo root).
+	 * @param {string} message - Commit message.
+	 */
+	static conditionallyCommitDirectory(dirPath, message) {
+		try {
+			// Check if there are any changes in the directory
+			execSync(`git diff --quiet ${dirPath}`);
+			console.log(`✅ No changes in ${dirPath}, skipping commit.`);
+		} catch {
+			// There are changes in the directory
+			console.log(`📂 Changes detected in ${dirPath}. Committing modified files...`);
+			
+			// Get list of modified files (including added, modified, deleted)
+			const changedFiles = execSync(`git status --porcelain ${dirPath}`)
+				.toString()
+				.split('\n')
+				.filter(line => line.trim() !== '')
+				.map(line => line.slice(3)); // strip status (e.g., " M path/to/file")
+			
+			if (changedFiles.length === 0) {
+				console.log(`⚠️ Detected changes but no files to commit in ${dirPath}.`);
+				return;
+			}
+
+			console.log(`📝 Adding files:\n${changedFiles.join('\n')}`);
+			
+			// Add each changed file
+			changedFiles.forEach(file => {
+				execSync(`git add "${file}"`);
+			});
+
+			// Commit the changes
+			execSync(`git commit -m "${message}"`);
+		}
+	}
+
+	static cleanHtmlDocFooters(directory) {
+		const files = fs.readdirSync(directory).filter(f => f.endsWith('.html'));
+		files.forEach(file => {
+			const filePath = path.join(directory, file);
+			let content = fs.readFileSync(filePath, 'utf8');
+			content = content.replace(/<footer>[\s\S]*?<\/footer>/, '<footer></footer>');
+			fs.writeFileSync(filePath, content, 'utf8');
+			console.log(`🧹 Cleaned footer in ${file}`);
+		});
+	}
+
+	/**
+	 * Cleans a directory by deleting all files and subdirectories inside it.
+	 * Does NOT delete the directory itself.
+	 * 
+	 * @param {string} dirPath - The path to the directory to clean.
+	 */
+	static cleanDirectory(dirPath) {
+		if (!fs.existsSync(dirPath)) {
+			console.log(`⚠️ Directory ${dirPath} does not exist.`);
+			return;
+		}
+
+		const entries = fs.readdirSync(dirPath);
+
+		for (const entry of entries) {
+			const fullPath = path.join(dirPath, entry);
+			const stat = fs.lstatSync(fullPath);
+
+			if (stat.isDirectory()) {
+				// Recursively remove the directory and its contents
+				fs.rmSync(fullPath, { recursive: true, force: true });
+				console.log(`🗑️ Deleted directory: ${fullPath}`);
+			} else {
+				// Delete file
+				fs.unlinkSync(fullPath);
+				console.log(`🗑️ Deleted file: ${fullPath}`);
+			}
+		}
+
+		console.log(`✅ Cleaned directory: ${dirPath}`);
+	}
+
+	/**
+	 * Validates that the current working directory is the project root.
+	 * If not, prints an error and exits.
+	 */
+	static validateRunFromRoot() {
+		const cwd = process.cwd();  // current working directory
+		const root = this.getRootDirectory();  // your known repo root
+
+		const resolvedCwd = path.resolve(cwd);
+		const resolvedRoot = path.resolve(root);
+
+		if (resolvedCwd !== resolvedRoot) {
+			console.error(`❌ Error: This script must be run from the project root directory.`);
+			console.error(`   Expected: ${resolvedRoot}`);
+			console.error(`   Got:      ${resolvedCwd}`);
+			process.exit(1);
+		} else {
+			console.log(`✅ Running from the project root: ${resolvedRoot}`);
+		}
 	}
 }

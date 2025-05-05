@@ -4,9 +4,9 @@
 
 /* ensures existence of globalThis */
 
-import "../moyal.test.js";
+import { TestGroup } from "@moyal/js-test";
 
-export default new moyal.test.TestGroup("Basic Assertion Tests")
+export default new TestGroup("Basic Assertion Tests")
 
 	.groupStart("areEqual")
 		.areEqual("Direct equality", 2 + 2, 4)

@@ -10,7 +10,7 @@ import Errors from "./errors.js";
  * typically used in LINQ operations like `groupBy` or `groupJoin`.
  * This class is iterable and inherits all LINQ capabilities.
  */
-export default class LinqGroup extends Linq {
+class LinqGroup extends Linq {
 	#_key = null;
 
 	/**
@@ -21,7 +21,7 @@ export default class LinqGroup extends Linq {
 	 */
 	constructor(key, iterable, thisArg) {
 		if (key == null) { 
-			throw new Error(Errors.getMessage("ARGUMENT_MUST_NOT_BE_NULL_key")); 
+			throw new Error(Errors.Messages.ARGUMENT_MUST_NOT_BE_NULL_key); 
 		}
 		super(iterable, thisArg);
 		this.#_key = key;
@@ -42,3 +42,7 @@ export default class LinqGroup extends Linq {
 		return `LinqGroup (key=${this.#_key})`;
 	}
 }
+
+export default LinqGroup;
+
+export { LinqGroup };

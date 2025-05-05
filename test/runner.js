@@ -5,12 +5,12 @@
  * However, under Node environment it is better to execure runner-for-node.js
  */
 
+import { MultiLevelAutoNumbering } from "@moyal/js-test";
 
-import port from "../scripts/include/portability.js";
-import "./moyal.test.js";
+import Portability from "../scripts/include/portability.js";
 
 /* Good practice - use automatic test numerator */
-const mlAutoNumber = new moyal.test.MultiLevelAutoNumbering();
+const mlAutoNumber = new MultiLevelAutoNumbering();
 
 /* Loads the test and run each of them, one by one */
 import testSettings from "./settings.js";
@@ -20,7 +20,8 @@ Promise.all(list.map(path => import(`${testUnits.basePath}/${path}`)))
     .then(modules => {
         let hasFailure = false;
 
-        for (const mod of modules) {
+        console.log(modules);
+        for (const mod of modules) {            
             const test = mod.default;
 
             try {
@@ -37,9 +38,9 @@ Promise.all(list.map(path => import(`${testUnits.basePath}/${path}`)))
 			if(hasFailure)
 				break;
         }
-        port.exit(hasFailure ? 1 : 0);
+        Portability.exit(hasFailure ? 1 : 0);
     })
     .catch(err => {
         console.error("Failed to load tests:", err);
-        port.exit(1);
+        Portability.exit(1);
     });

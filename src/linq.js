@@ -48,7 +48,7 @@ class Linq {
      */
     constructor(iterable, thisArg) {
         if (!TypeCheck.isIterable(iterable)) { 
-            throw new Error(Errors.getMessage("MUST_BE_ITERABLE_iterable")); 
+            throw new Error(Errors.Messages.MUST_BE_ITERABLE_iterable); 
         }
         this.#_iterable = iterable;
         this.#_thisArg = thisArg;
@@ -82,8 +82,8 @@ class Linq {
     aggregate(seed, accumulator, resultSelector) { return Linq.#_aggregate(this.#_thisArg, seed, this, accumulator, resultSelector); }
 
     static #_aggregate(thisArg, seed, iterable, accumulator, resultSelector) {
-        if (!TypeCheck.isFunction(accumulator)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_accumulator")); }
-        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_resultSelector")); }
+        if (!TypeCheck.isFunction(accumulator)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_accumulator); }
+        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_resultSelector); }
 
         thisArg = thisArg ?? this;
 
@@ -105,7 +105,7 @@ class Linq {
     all(predicate) { return Linq.#_all(this.#_thisArg, this, predicate); }
 
     static #_all(thisArg, iterable, predicate) {
-        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_predicate")); }
+        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_predicate); }
 
         thisArg = thisArg ?? this;
 
@@ -126,7 +126,7 @@ class Linq {
     any(predicate) { return Linq.#_any(this.#_thisArg, this, predicate); }
 
     static #_any(thisArg, iterable, predicate) {
-        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_predicate")); }
+        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_predicate); }
 
         thisArg = thisArg ?? this;
 
@@ -185,7 +185,7 @@ class Linq {
     static #_concat(thisArg, iterable, ...withIterables) {
         /* the validation took place here and NOT within #_concat, because that is a deferred execution generator function*/
         for (let iter of withIterables) {
-            if (!TypeCheck.isIterable(iter)) { throw new Error(Errors.getMessage("ALL_MUST_BE_ITERABLE")); }
+            if (!TypeCheck.isIterable(iter)) { throw new Error(Errors.Messages.ALL_MUST_BE_ITERABLE); }
         }
         return new this(this.#_concatGen(thisArg, ...[iterable, ...withIterables]), thisArg);
     }
@@ -206,7 +206,7 @@ class Linq {
     contains(value, equalityComparer = null) { return Linq.#_contains(this.#_thisArg, this, value, equalityComparer); }
 
     static #_contains(thisArg, iterable, value, equalityComparer) {
-        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_equalityComparer")); }
+        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_equalityComparer); }
 
         equalityComparer = equalityComparer ?? this.#_defaultEqualityComparer;
 
@@ -228,7 +228,8 @@ class Linq {
 
     static #_count(thisArg, iterable) {
         let c = 0;
-        for (let item of iterable) {
+        // eslint-disable-next-line no-unused-vars
+        for (let _ of iterable) {
             c++;
         }
         return c;
@@ -264,7 +265,7 @@ class Linq {
 
     static #_distinct(thisArg, iterable, equalityComparer) {
         /* the validation took place here and NOT within #_distinctGen, because that is a deferred execution generator function*/
-        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_equalityComparer")); }
+        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_equalityComparer); }
         return new this(this.#_distinctGen(thisArg, iterable, equalityComparer), thisArg);
     }
 
@@ -297,7 +298,7 @@ class Linq {
     duplicate(factor, inplace) { return Linq.#_duplicate(this.#_thisArg, this, factor, inplace); }
 
     static #_duplicate(thisArg, iterable, factor, inplace) {
-        if (!TypeCheck.isNumber(factor) || Math.floor(factor) !== factor || factor < 0) { throw new Error(Errors.getMessage("MUST_BE_NON_NEGATIVE_INTEGER_factor")); }
+        if (!TypeCheck.isNumber(factor) || Math.floor(factor) !== factor || factor < 0) { throw new Error(Errors.Messages.MUST_BE_NON_NEGATIVE_INTEGER_factor); }
         return new this(this.#_duplicateGen(thisArg, iterable, factor, inplace === true), thisArg);
     }
 
@@ -337,7 +338,7 @@ class Linq {
 
     static #_elementAt(thisArg, iterable, index, hasDefaultValue, defaultValue) {
         if (!TypeCheck.isNumber(index) || Math.floor(index) != index || (index < 0 && hasDefaultValue !== true)) {
-            throw new Error(Errors.getMessage("MUST_BE_NON_NEGATIVE_INTEGER_index"));
+            throw new Error(Errors.Messages.MUST_BE_NON_NEGATIVE_INTEGER_index);
         }
         let current = 0;
         for (let item of iterable) {
@@ -346,7 +347,7 @@ class Linq {
 
         if (hasDefaultValue === true) { return defaultValue; }
 
-        throw new Error(current === 0 ? Errors.getMessage("SEQUENCE_IS_EMPTY"): Errors.getMessage("OUT_OF_RANGE_index"));
+        throw new Error(current === 0 ? Errors.Messages.SEQUENCE_IS_EMPTY : Errors.Messages.OUT_OF_RANGE_index);
     }
 
     /**
@@ -374,8 +375,8 @@ class Linq {
             * 
             * The implementation tak under considation the possibility that the specified equalityComparer is not commotative!
             */
-        if (!TypeCheck.isIterable(secondIterable)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_secondIterable")); }
-        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_equalityComparer")); }
+        if (!TypeCheck.isIterable(secondIterable)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_secondIterable); }
+        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_equalityComparer); }
 
         return new this(this.#_vanGen(thisArg, sourceIterable, secondIterable, equalityComparer, algorithm), thisArg);
     }
@@ -468,7 +469,7 @@ class Linq {
 
     static #_first(thisArg, iterable, predicate, hasDefaultValue, defaultValue) {
         if (predicate != null && !TypeCheck.isFunction(predicate)) {
-            throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_predicate"));
+            throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_predicate);
         }
 
         thisArg = thisArg ?? this;
@@ -480,7 +481,7 @@ class Linq {
         }
 
         if (hasDefaultValue) { return defaultValue; }
-        throw new Error(index > 0 && predicate != null ? Errors.getMessage("NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate"): Errors.getMessage("SEQUENCE_IS_EMPTY"));
+        throw new Error(index > 0 && predicate != null ? Errors.Messages.NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate: Errors.Messages.SEQUENCE_IS_EMPTY);
     }
 
     /**
@@ -494,7 +495,7 @@ class Linq {
     forEach(callback) { return Linq.#_forEach(this.#_thisArg, this, callback); }
 
     static #_forEach(thisArg, iterable, callback) {
-        if (!TypeCheck.isFunction(callback)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_callback")); }
+        if (!TypeCheck.isFunction(callback)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_callback); }
 
         thisArg = thisArg ?? this;
 
@@ -518,10 +519,10 @@ class Linq {
     }
 
     static #_groupBy(thisArg, iterable, keySelector, elementSelector, resultSelector, keyEqualityComparer) {
-        if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keySelector")); }
-        if (elementSelector != null && !TypeCheck.isFunction(elementSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_elementSelector")); }
-        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_resultSelector")); }
-        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer")); }
+        if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keySelector); }
+        if (elementSelector != null && !TypeCheck.isFunction(elementSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_elementSelector); }
+        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_resultSelector); }
+        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer); }
 
         return new this(this.#_groupByGen(thisArg, iterable, keySelector, elementSelector, resultSelector, keyEqualityComparer), thisArg);
     }
@@ -581,11 +582,11 @@ class Linq {
     }
 
     static #_groupJoin(thisArg, iterable, rightIterable, leftKeySelector, rightKeySelector, resultSelector, keyEqualityComparer) {
-        if (!TypeCheck.isIterable(rightIterable)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_rightIterable")); }
-        if (leftKeySelector != null && !TypeCheck.isFunction(leftKeySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_leftKeySelector")); }
-        if (rightKeySelector != null && !TypeCheck.isFunction(rightKeySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_rightKeySelector")); }
-        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_resultSelector")); }
-        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer")); }
+        if (!TypeCheck.isIterable(rightIterable)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_rightIterable); }
+        if (leftKeySelector != null && !TypeCheck.isFunction(leftKeySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_leftKeySelector); }
+        if (rightKeySelector != null && !TypeCheck.isFunction(rightKeySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_rightKeySelector); }
+        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_resultSelector); }
+        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer); }
 
         return new this(this.#_groupJoinGen(thisArg, iterable, rightIterable, leftKeySelector, rightKeySelector, resultSelector, keyEqualityComparer), thisArg);
     }
@@ -634,11 +635,11 @@ class Linq {
     }
 
     static #_join(thisArg, iterable, rightIterable, leftKeySelector, rightKeySelector, resultSelector, keyEqualityComparer) {
-        if (!TypeCheck.isIterable(rightIterable)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_rightIterable")); }
-        if (leftKeySelector != null && !TypeCheck.isFunction(leftKeySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_leftKeySelector")); }
-        if (rightKeySelector != null && !TypeCheck.isFunction(rightKeySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_rightKeySelector")); }
-        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_resultSelector")); }
-        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer")); }
+        if (!TypeCheck.isIterable(rightIterable)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_rightIterable); }
+        if (leftKeySelector != null && !TypeCheck.isFunction(leftKeySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_leftKeySelector); }
+        if (rightKeySelector != null && !TypeCheck.isFunction(rightKeySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_rightKeySelector); }
+        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_resultSelector); }
+        if (keyEqualityComparer != null && !TypeCheck.isFunction(keyEqualityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keyEqualityComparer); }
 
         return new this(this.#_joinGen(thisArg, iterable, rightIterable, leftKeySelector, rightKeySelector, resultSelector, keyEqualityComparer), thisArg);
     }
@@ -681,7 +682,7 @@ class Linq {
     lastOrDefault(defaultValue, predicate) { return Linq.#_last(this.#_thisArg, this, predicate, true, defaultValue); }
 
     static #_last(thisArg, iterable, predicate, hasDefaultValue, defaultValue) {
-        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_predicate")); }
+        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_predicate); }
         thisArg = thisArg ?? this;
         let index = 0, lastSoFar, lastSoFarAssigned = false;
         for (let item of iterable) {
@@ -696,7 +697,7 @@ class Linq {
 
         if (hasDefaultValue) { return defaultValue; }
 
-        throw new Error(index > 0 && predicate != null ? Errors.getMessage("NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate"): Errors.getMessage("SEQUENCE_IS_EMPTY"));
+        throw new Error(index > 0 && predicate != null ? Errors.Messages.NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate: Errors.Messages.SEQUENCE_IS_EMPTY);
     }
 
     /**
@@ -728,7 +729,7 @@ class Linq {
     static #_min(thisArg, iterable, comparer) { return this.#_minMax(thisArg, iterable, comparer, -1); }
 
     static #_minMax(thisArg, iterable, comparer, compareFactor) {
-        if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_comparer")); }
+        if (comparer != null && !TypeCheck.isFunction(comparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_comparer); }
         comparer = comparer ?? this.#_defaultComparer;
 
         let first = true, index = 0, soFar = undefined;
@@ -790,8 +791,8 @@ class Linq {
      * @throws `count` must be a non negative integer
      */
     static range(start, count, thisArg) {
-        if (!TypeCheck.isNumber(start) || Math.floor(start) !== start) { throw new Error(Errors.getMessage("MUST_BE_INTEGER_start")); }
-        if (!TypeCheck.isNumber(count) || Math.floor(count) !== count || count < 0) { throw new Error(Errors.getMessage("MUST_BE_NON_NEGATIVE_INTEGER_count")); }
+        if (!TypeCheck.isNumber(start) || Math.floor(start) !== start) { throw new Error(Errors.Messages.MUST_BE_INTEGER_start); }
+        if (!TypeCheck.isNumber(count) || Math.floor(count) !== count || count < 0) { throw new Error(Errors.Messages.MUST_BE_NON_NEGATIVE_INTEGER_count); }
         return new this(this.#_rangeGen(start, count), thisArg);
     }
 
@@ -825,7 +826,7 @@ class Linq {
      * @throws `count` must be a non negative integer
      */
     static repeat(value, count, thisArg) {
-        if (!TypeCheck.isNumber(count) || Math.floor(count) !== count || count < 0) { throw new Error(Errors.getMessage("MUST_BE_NON_NEGATIVE_INTEGER_count")); }
+        if (!TypeCheck.isNumber(count) || Math.floor(count) !== count || count < 0) { throw new Error(Errors.Messages.MUST_BE_NON_NEGATIVE_INTEGER_count); }
         return new this(this.#_repeat(thisArg, value, count), thisArg);
     }
 
@@ -857,7 +858,7 @@ class Linq {
     select(selector) { return Linq.#_select(this.#_thisArg, this, selector); }
 
     static #_select(thisArg, iterable, selector) {
-        if (selector != null && !TypeCheck.isFunction(selector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_selector")); }
+        if (selector != null && !TypeCheck.isFunction(selector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_selector); }
         return new this(this.#_selectGen(thisArg, iterable, selector), thisArg);
     }
 
@@ -890,8 +891,8 @@ class Linq {
     selectMany(collectionSelector, resultSelector) { return Linq.#_selectMany(this.#_thisArg, this, collectionSelector, resultSelector); }
 
     static #_selectMany(thisArg, iterable, collectionSelector, resultSelector) {
-        if (collectionSelector != null && !TypeCheck.isFunction(collectionSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_collectionSelector")); }
-        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_resultSelector")); }
+        if (collectionSelector != null && !TypeCheck.isFunction(collectionSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_collectionSelector); }
+        if (resultSelector != null && !TypeCheck.isFunction(resultSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_resultSelector); }
         return new this(this.#_selectManyGen(thisArg, iterable, collectionSelector, resultSelector), thisArg);
     }
 
@@ -924,8 +925,8 @@ class Linq {
     sequenceEqual(secondIterable, equalityComparer) { return Linq.#_sequenceEqual(this.#_thisArg, this, secondIterable, equalityComparer); }
 
     static #_sequenceEqual(thisArg, firstIterable, secondIterable, equalityComparer) {
-        if (!TypeCheck.isIterable(secondIterable)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_secondIterable")); }
-        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_equalityComparer")); }
+        if (!TypeCheck.isIterable(secondIterable)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_secondIterable); }
+        if (equalityComparer != null && !TypeCheck.isFunction(equalityComparer)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_equalityComparer); }
 
         equalityComparer = equalityComparer ?? this.#_defaultEqualityComparer;
 
@@ -977,7 +978,7 @@ class Linq {
     singleOrDefault(defaultValue, predicate) { return Linq.#_single(this.#_thisArg, this, predicate, true, defaultValue); }
 
     static #_single(thisArg, iterable, predicate, hasDefaultValue, defaultValue) {
-        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_predicate")); }
+        if (predicate != null && !TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_predicate); }
 
         let result, resultCount = 0, index = 0;
 
@@ -987,7 +988,7 @@ class Linq {
             if (predicate == null || predicate.call(thisArg, item, index) === true) {
                 resultCount++;
                 if (resultCount > 1) {
-                    throw new Error(predicate == null ? Errors.getMessage("INPUT_SEQUENCE_CONTAINS_MORE_THAN_ONE_ELEMENT"): Errors.getMessage("MORE_THAN_ELEMENT_SEQUENCE_SATISFIES_THE_CONDITION"));
+                    throw new Error(predicate == null ? Errors.Messages.INPUT_SEQUENCE_CONTAINS_MORE_THAN_ONE_ELEMENT: Errors.Messages.MORE_THAN_ELEMENT_SEQUENCE_SATISFIES_THE_CONDITION);
                 }
                 result = item;
             }
@@ -997,7 +998,7 @@ class Linq {
         if (resultCount === 0) {
             if (hasDefaultValue === true) { result = defaultValue; }
             else {
-                throw new Error(index === 0 ? Errors.getMessage("SEQUENCE_IS_EMPTY"): Errors.getMessage("NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate"));
+                throw new Error(index === 0 ? Errors.Messages.SEQUENCE_IS_EMPTY: Errors.Messages.NO_ELEMENT_SATISFIES_THE_CONDITION_IN_predicate);
             }
         }
 
@@ -1013,7 +1014,7 @@ class Linq {
     skip(count) { return Linq.#_skip(this.#_thisArg, this, count) }
 
     static #_skip(thisArg, iterable, count) {
-        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.getMessage("MUST_BE_INTEGER_count")); }
+        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.Messages.MUST_BE_INTEGER_count); }
         return new this(this.#_skipGen(thisArg, iterable, count), thisArg);
     }
 
@@ -1034,7 +1035,7 @@ class Linq {
     skipLast(count) { return Linq.#_skipLast(this.#_thisArg, this, count); }
 
     static #_skipLast(thisArg, iterable, count) {
-        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.getMessage("MUST_BE_INTEGER_count")); }
+        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.Messages.MUST_BE_INTEGER_count); }
         return new this(this.#_skipLastGen(thisArg, iterable, count), thisArg);
     }
 
@@ -1057,7 +1058,7 @@ class Linq {
     skipWhile(predicate) { return Linq.#_skipWhile(this.#_thisArg, this, predicate); }
 
     static #_skipWhile(thisArg, iterable, predicate) {
-        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_predicate")); }
+        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_predicate); }
         return new this(this.#_skipWhileGen(thisArg, iterable, predicate), thisArg);
     }
 
@@ -1085,7 +1086,7 @@ class Linq {
      * - standard deviation: The standard deviation of the sequence (which is a square root of the variance).
      * 
      * If extended was set to true, or more specifically extended.median and/or extended.mode were set to true.
-     * - mode: The value that appears most frequently in the sequence. If more than a single value have the same maximum repetition count, an array of all "modes" returns.
+     * - mode: The value that appears most frequently in the sequence. If more than a single value have the same maximum repetition count, an array of all "modes" returns. If all items have the same repetition count, `undefined` is returned.
      * - median: A numeric value that "splits" the sequence to two, so half of the elements comes before it, and half of the elements comes after it.
      * 
      * @param {(boolean | {median: boolean, mode: boolean})} extended - Determines whether to calculates extended (additional) statistic values: mode, median, variance, standard.
@@ -1137,7 +1138,7 @@ class Linq {
         let index = 0;
         for (let value of iterable) {
             if (!TypeCheck.isNumber(value)) {
-                throw new Error(Errors.getMessage("MUST_BE_NUMBER_all_sequence_elements"));
+                throw new Error(Errors.Messages.MUST_BE_NUMBER_all_sequence_elements);
             }
     
             if (index === 0) {
@@ -1160,7 +1161,7 @@ class Linq {
             }
 
             if (freqMap /* for mode */) {
-                const freq = freqMap.get(value) || 0;
+                let freq = freqMap.get(value) || 0;
                 freq++;
                 freqMap.set(value, freq);
                 if(highestRep == 0 || freq > highestRep)
@@ -1247,7 +1248,7 @@ class Linq {
     take(count) { return Linq.#_take(this.#_thisArg, this, count); }
 
     static #_take(thisArg, iterable, count) {
-        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.getMessage("MUST_BE_INTEGER_count")); }
+        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.Messages.MUST_BE_INTEGER_count); }
         return new this(this.#_takeGen(thisArg, iterable, count), thisArg);
     }
 
@@ -1268,7 +1269,7 @@ class Linq {
     takeLast(count) { return Linq.#_takeLast(this.#_thisArg, this, count); }
 
     static #_takeLast(thisArg, iterable, count) {
-        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.getMessage("MUST_BE_INTEGER_count")); }
+        if (!TypeCheck.isIntegral(count)) { throw new Error(Errors.Messages.MUST_BE_INTEGER_count); }
         return new this(this.#_takeLastGen(thisArg, iterable, count), thisArg);
     }
 
@@ -1291,7 +1292,7 @@ class Linq {
     takeWhile(predicate) { return Linq.#_takeWhile(this.#_thisArg, this, predicate); }
 
     static #_takeWhile(thisArg, iterable, predicate) {
-        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_predicate")); }
+        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_predicate); }
         return new this(this.#_takeWhileGen(thisArg, iterable, predicate), thisArg);
     }
 
@@ -1354,9 +1355,10 @@ class Linq {
      */
     toSet(keySelector) { return Linq.#_toMapOrSet(this.#_thisArg, this, keySelector, null, true); }
 
+    // eslint-disable-next-line no-unused-vars
     static #_toMapOrSet(thisArg, iterable, keySelector, valueSelector, set, weak) {
-        if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_keySelector")); }
-        if (valueSelector != null && !TypeCheck.isFunction(valueSelector)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_OR_NULLISH_valueSelector")); }
+        if (keySelector != null && !TypeCheck.isFunction(keySelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_keySelector); }
+        if (valueSelector != null && !TypeCheck.isFunction(valueSelector)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_OR_NULLISH_valueSelector); }
 
         /*
             * This implementation does not contain key comparer because Javascript map does not support key comparer for Map, and so is for Set.
@@ -1371,7 +1373,7 @@ class Linq {
         for (let item of iterable) {
             let key = keySelector.call(thisArg, item, index);
             if (result.has(key)) {
-                throw new Error(Errors.getMessage("PRODUCES_DUPLICATE_KEYS_keySelector"));
+                throw new Error(Errors.Messages.PRODUCES_DUPLICATE_KEYS_keySelector);
             }
 
             if (set === true) { result.add(key); }
@@ -1392,7 +1394,7 @@ class Linq {
     where(predicate) { return Linq.#_where(this.#_thisArg, this, predicate); }
 
     static #_where(thisArg, iterable, predicate) {
-        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_predicate")); }
+        if (!TypeCheck.isFunction(predicate)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_predicate); }
         return new this(this.#_whereGen(thisArg, iterable, predicate), thisArg);
     }
 
@@ -1428,9 +1430,9 @@ class Linq {
      * @throws `transform` must be a function
      */
     static zip(iterable1, iterable2, transform, thisArg) {
-        if (!TypeCheck.isIterable(iterable1)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_iterable1")); }
-        if (!TypeCheck.isIterable(iterable2)) { throw new Error(Errors.getMessage("MUST_BE_ITERABLE_iterable2")); }
-        if (!TypeCheck.isFunction(transform)) { throw new Error(Errors.getMessage("MUST_BE_FUNCTION_transform")); }
+        if (!TypeCheck.isIterable(iterable1)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_iterable1); }
+        if (!TypeCheck.isIterable(iterable2)) { throw new Error(Errors.Messages.MUST_BE_ITERABLE_iterable2); }
+        if (!TypeCheck.isFunction(transform)) { throw new Error(Errors.Messages.MUST_BE_FUNCTION_transform); }
 
         return new this(this.#_zip(thisArg, iterable1, iterable2, transform), thisArg);
     }
@@ -1459,3 +1461,7 @@ class Linq {
 Linq.Statistics = Statistics;
 
 export default Linq;
+
+export {
+    Linq
+};

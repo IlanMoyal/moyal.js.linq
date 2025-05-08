@@ -11,7 +11,7 @@ class Errors {
 		INPUT_SEQUENCE_CONTAINS_MORE_THAN_ONE_ELEMENT: "The input sequence contains more than one element",
 		MORE_THAN_ELEMENT_SEQUENCE_SATISFIES_THE_CONDITION: "More than one element satisfies the condition in predicate",
 		MUST_BE_NON_NEGATIVE_INTEGER_count: "count must be a non negative integer",
-		MUST_BE_NON_NEGATIVE_INTEGER_factor: "factor must be a non negative integer",
+		MUST_BE_NON_NEGATIVE_INTEGER_factor: "`factor` must be a non negative integer",
 		MUST_BE_NON_NEGATIVE_INTEGER_index: "index must be a non negative integer",
 		MUST_BE_FUNCTION_OR_NULLISH_collectionSelector: "collectionSelector must be a function or nullish",
 		MUST_BE_FUNCTION_OR_NULLISH_comparer: "comparer must be a function or nullish",
@@ -49,5 +49,4 @@ class Errors {
 	static get Messages() { return this.#_errorMessages; }
 }
 
-export default Errors;
 export { Errors };

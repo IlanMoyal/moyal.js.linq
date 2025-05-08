@@ -2,9 +2,9 @@
  * File: src/linqOrder.js
  */
 
-import TypeCheck from "./typeCheck.js";
-import Linq from "./Linq.js";
-import Errors from "./errors.js";
+import { TypeCheck } from "./TypeCheck.js";
+import { Linq } from "./Linq.js";
+import { Errors } from "./Errors.js";
 
 /**
  * Represents a LINQ-ordered iterable, allowing chained sorting with `thenBy` and `thenByDescending`.
@@ -96,7 +96,5 @@ class LinqOrder extends Linq {
 	 */
 	thenByDescending(keySelector, comparer) { return LinqOrder.#_injectThenBy(this, keySelector, comparer, true); }
 }
-
-export default LinqOrder;
 
 export { LinqOrder };

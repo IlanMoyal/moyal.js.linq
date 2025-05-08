@@ -5,9 +5,9 @@
  * However, under Node environment it is better to execure runner-for-node.js
  */
 
-import { MultiLevelAutoNumbering } from "@moyal/js-test";
+import {MultiLevelAutoNumbering} from "../src/index.js";
 
-import Portability from "../scripts/include/portability.js";
+import { Portability } from "../scripts/include/portability.js";
 
 /* Good practice - use automatic test numerator */
 const mlAutoNumber = new MultiLevelAutoNumbering();
@@ -20,8 +20,7 @@ Promise.all(list.map(path => import(`${testUnits.basePath}/${path}`)))
     .then(modules => {
         let hasFailure = false;
 
-        console.log(modules);
-        for (const mod of modules) {            
+        for (const mod of modules) {
             const test = mod.default;
 
             try {

@@ -2,8 +2,8 @@
  * File: src/linqGroup.js
  */
 
-import Linq from "./Linq.js";
-import Errors from "./errors.js";
+import { Linq } from "./Linq.js";
+import { Errors } from "./Errors.js";
 
 /**
  * Represents a group of elements sharing a common key,
@@ -42,7 +42,5 @@ class LinqGroup extends Linq {
 		return `LinqGroup (key=${this.#_key})`;
 	}
 }
-
-export default LinqGroup;
 
 export { LinqGroup };

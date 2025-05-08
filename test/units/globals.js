@@ -2,7 +2,7 @@
  * File: test/units/globals.js
  */
 
-import Linq from "../../src/index.js";
+import { Linq } from "../../src/index.js";
 
 let numbersArray = [2, 3, 6, 8, 1, 20, 5, -11, 0, 91];
 let emptyArray = [];
@@ -23,10 +23,6 @@ let numbersInt16Array = new Int16Array([2, 3, 6, 8, 1, 20, 5, -11, 0, 91]);
 let emptyInt16Array = new Int16Array();
 let linq2NumbersInt16Array = new Linq(numbersInt16Array);
 let linq2EmptyInt16Array = new Linq(emptyInt16Array);
-
-// let tempNumbersArr; /* to be used within tests using comma separator */
-// let tempString = null;
-// let tempValue;
 
 function isInteger(n) {
 	return Math.floor(n) === n;
@@ -127,10 +123,6 @@ export {
 	emptyInt16Array,
 	linq2NumbersInt16Array,
 	linq2EmptyInt16Array,
-
-	// tempNumbersArr,
-	// tempString,
-	// tempValue,
 
 	isInteger,
 	dividedBy,

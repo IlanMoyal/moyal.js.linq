@@ -268,6 +268,4 @@ class Statistics {
 	}
 }
 
-export default Statistics;
-
 export { Statistics };

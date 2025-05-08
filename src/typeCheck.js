@@ -3,7 +3,13 @@
 */
 
 /**
+ * A numeric value (number or bigint).
+ * @typedef {(number|bigint)} NumericValue
+ */
+
+/**
  * Utility class for runtime type checking.
+ * @ignore
  */
 class TypeCheck {
 	/**
@@ -26,7 +32,7 @@ class TypeCheck {
 	 * Checks if the value is an integer (number or bigint),
 	 * optionally applying a custom predicate.
 	 * @param {any} obj
-	 * @param {(n: number|bigint) => boolean} [additionalPredicate]
+	 * @param {function(NumericValue):boolean} [additionalPredicate]
 	 * @returns {boolean}
 	 */
 	static isIntegral(obj, additionalPredicate) { 
@@ -66,7 +72,5 @@ class TypeCheck {
 		return (type === "object" || type === "function") && (tag === "[object Function]" || tag === "[object GeneratorFunction]");
 	}
 }
-
-export default TypeCheck;
 
 export { TypeCheck };

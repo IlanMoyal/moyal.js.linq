@@ -19,12 +19,11 @@
  * © 2000–present Ilan Moyal. All rights reserved.
  */
 
-
-import Linq from "./Linq.js";
-import LinqGroup from "./LinqGroup.js";
-import LinqOrder from "./LinqOrder.js";
+import { Linq } from "./Linq.js";
+import { LinqGroup } from "./LinqGroup.js";
+import { LinqOrder } from "./LinqOrder.js";
+import { Statistics } from "./LinqStatistics.js";
 
 Linq.__setup(LinqOrder, LinqGroup);
 
-export default Linq;
-export { Linq };
+export { Linq, Statistics };

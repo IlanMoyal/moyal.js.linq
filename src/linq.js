@@ -2,15 +2,50 @@
  * File: src/linq.js
  */
 
-import Errors from "./errors.js";
-import TypeCheck from "./typeCheck.js";
+import { Errors } from "./Errors.js";
+import { TypeCheck } from "./TypeCheck.js";
 import BuildInfo from "./auto-generated/build-info.js";
-import Statistics from "./linqStatistics.js";
+import { Statistics } from "./LinqStatistics.js";
 
 let LinqOrder;
 let LinqGroup;
 
+/**
+ * Linq - A static entry point for LINQ-style operations on arrays.
+ *
+ * Provides methods to initiate query chains, enabling advanced data transformations
+ * such as filtering, mapping, grouping, ordering, and aggregating using a fluent syntax.
+ *
+ * All operations are performed on native JavaScript arrays, with no external dependencies.
+ *
+ * Example usage:
+ *
+ * ```js
+ * const query = Linq.from([1, 2, 3, 4])
+ *     .where(x => x > 2)
+ *     .select(x => x * 10)
+ *     .toArray();  // [30, 40]
+ * ```
+ * 
+ * or
+ * 
+ * ```js
+ * const query = new Linq([1, 2, 3, 4])
+ *     .where(x => x > 2)
+ *     .select(x => x * 10)
+ *     .toArray();  // [30, 40]
+ * ```
+ *
+ * @class
+ */
 class Linq {
+    /**
+     * Setups `Link` class with neessary types.
+     * 
+     * @param {LinqOrder} linqOrderClass 
+     * @param {LinqGroup} linqGroupClass 
+     * @ignore
+     */
     static __setup(linqOrderClass, linqGroupClass) {
         LinqOrder = linqOrderClass;
         LinqGroup = linqGroupClass;
@@ -64,9 +99,11 @@ class Linq {
     }
 
     /**
-     * Wrap the specified iterable with Linq.
+     * Initializes a LINQ query from the specified iterable.
+     * 
      * @param {Iterable} iterable - An iterable object.
      * @param {any} [thisArg] - An object to be used as `this` pointer in callback calls.
+     * @returns {Linq} - A LINQ query from the specified iterable.
      */
     static from(iterable, thisArg) { return new this(iterable, thisArg); }
 
@@ -98,6 +135,7 @@ class Linq {
 
     /**
      * Determines whether all elements of the sequence satisfy a condition.
+     * 
      * @param {Function} predicate - A function to test each source element for a condition; The first parameter is a source element, the second parameter represents the index of the source element in the sequence.
      * @returns {boolean} true if every element of the sequence passes the test in the specified predicate, or if the sequence is empty; otherwise, false.
      * @throws `predicate` must be a function.
@@ -119,6 +157,7 @@ class Linq {
 
     /**
      * Determines whether any element of the sequence exists or satisfies a condition.
+     * 
      * @param {Function} [predicate] - A function to test each source element for a condition; The first parameter is a source element, the second parameter represents the index of the source element in the sequence.
      * @returns {boolean} true if the sequence contains any elements; otherwise, false. BUT In case that a predicate was specified: true if the sequence is not empty and at least one of its elements passes the test in the specified predicate; otherwise, false.
      * @throws `predicate` must be a function or nullish.
@@ -140,6 +179,7 @@ class Linq {
 
     /**
      * Appends a value to the end of the sequence. The original sequence (the current) is not changed.
+     * 
      * @param {any} value - The value to be appended to the returned sequence.
      * @returns {Linq} A sequence consist of the current sequence plus the specified value.
      */
@@ -155,7 +195,8 @@ class Linq {
     /**
      * Computes the average of the sequence of numeric values. 
      * If the sequence is empty or at least one element of the sequence is not a number, the return value is undefined.
-     * @returns {number | undefined} The numeric average of the sequence,or undefined if the sequence contains at least oneitem that is not a number.
+     * 
+     * @returns {number|undefined} The numeric average of the sequence,or undefined if the sequence contains at least oneitem that is not a number.
      */
     average() { return Linq.#_average(this.#_thisArg, this); }
 
@@ -176,6 +217,7 @@ class Linq {
 
     /**
      * Concatenates the current sequence with the specified sequences. Note that the current sequence is not modified.
+     * 
      * @param {...Iterable} withIterables - Iterable sequences  be appended to the endof this sequence to form a single sequence.
      * @returns {Linq} An iterable that contains the concatenated elements of the current sequence with all input sequences. 
      * @throw At least one of the argument is not iterable.
@@ -198,6 +240,7 @@ class Linq {
 
     /**
      * Determines whether the sequence contains the specified element using strict equality comparison (===) or the specified equality comparer.
+     * 
      * @param {any} value - The value to locate in the sequence.
      * @param {Function} [equalityComparer] - An optional equality comparer to compare values. The first parameter to the comparer is the specified value. The second parameter is an item from the sequence. The third parameter is the index of the item in the sequence.
      * @returns {boolean} true if the sequence contains the specified value using strict equality comparison (===) or the specified equality comparer; otherwise, false.
@@ -222,6 +265,7 @@ class Linq {
 
     /**
      * Returns the number of elements in a sequence.
+     * 
      * @returns {number} The number of elements in a sequence.
      */
     count() { return Linq.#_count(this.#_thisArg, this); }
@@ -237,6 +281,7 @@ class Linq {
 
     /**
      * Returns the elements of the sequence, or a default valued singleton collection if the sequence is empty.
+     * 
      * @param {any} defaultSingletonValue - A default value to be used as a singleton in the returned sequence if the current sequence is empty.
      * @returns {Iterable} The elements of the sequence, or a default valued singleton collection if the sequence is empty.
      */
@@ -256,7 +301,8 @@ class Linq {
     }
 
     /**
-     * Returns distinct elements from the sequence. 
+     * Returns distinct elements from the sequence.
+     *  
      * @param {Function} [equalityComparer] - An equality comparer to compare values. 
      * @returns {Linq} Distinct elements from a sequence.
      * @throws `equalityComparer` must be a function or nullish
@@ -285,11 +331,11 @@ class Linq {
     }
 
     /**
-     * Duplicate the sequence n number of times as specified factor parameter. 
+     * Duplicate the sequence number of times as specified `factor` parameter. 
      * If the factor is non integral number, the integer value less than or equal to the factor is used.
      * If factor is less than 1, an empty sequence returns. 
      * This function does not modify the current sequence.
-     * otherwise the whole sequence is duplicated as 
+     * 
      * @param {number} factor - The number of times to duplicate the 
      * @param {boolean} [inplace] - If set to true, duplicate each element and places the duplication right after this element, instead of duplicating the whole sequence and return them one after the other. The default is false.
      * @returns {Linq} A sequence consist of duplication of the current sequence.
@@ -319,6 +365,7 @@ class Linq {
 
     /**
      * Returns the element at a specified index in the sequence.
+     * 
      * @param {number} index - The zero-based index of the element to retrieve.
      * @returns {any} The element at a specified index in a sequence.
      * @throws `index` must be a non negative integer
@@ -1460,8 +1507,4 @@ class Linq {
 
 Linq.Statistics = Statistics;
 
-export default Linq;
-
-export {
-    Linq
-};
+export { Linq };

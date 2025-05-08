@@ -5,8 +5,8 @@
 /* eslint-disable no-unused-vars */
 
 import { TestGroup } from "@moyal/js-test";
-import Linq from "../../src/index.js";
-import Errors from "../../src/errors.js";
+import { Linq } from "../../src/index.js";
+import { Errors } from "../../src/Errors.js";
 import { emptyArray, linq2EmptyMap, linq2NumbersMap, numbersArray } from "./globals.js";
 
 let tempNumbersArr; /* to be used within tests using comma separator */

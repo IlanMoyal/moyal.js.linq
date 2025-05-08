@@ -69,7 +69,7 @@
 <p>A lightweight, zero-dependency JavaScript library that brings LINQ-style querying capabilities to native arrays. Designed for both clarity and performance, it offers a fluent, chainable API for filtering, projecting, grouping, ordering, and aggregating data—without relying on external frameworks.</p>
 <h2>Information</h2>
 <ul>
-<li><strong>Current Version:</strong> 1.0.2</li>
+<li><strong>Current Version:</strong> 1.0.3</li>
 <li><strong>Author:</strong> Ilan Moyal</li>
 <li><strong>Website:</strong> https://www.moyal.es</li>
 <li><strong>License:</strong> MIT</li>
@@ -102,18 +102,18 @@
 <h3>In the Browser (ES Module via CDN)</h3>
 <pre class="prettyprint source lang-html"><code>&lt;!-- From jsDelivr CDN (minified version) -->
 &lt;script type=&quot;module&quot;>
-  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js&quot;;
+  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.min.js&quot;;
 &lt;/script>
 
 &lt;!-- From jsDelivr CDN (non minified version with documentation) -->
 &lt;script type=&quot;module&quot;>
-  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.js&quot;;
+  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.js&quot;;
 &lt;/script>
 </code></pre>
 <!-- CONTENT -->
 <p>Or using <strong>unpkg</strong>:</p>
 <pre class="prettyprint source lang-html"><code>&lt;script type=&quot;module&quot;>
-  import &quot;https://unpkg.com/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js&quot;;
+  import &quot;https://unpkg.com/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.min.js&quot;;
 &lt;/script>
 </code></pre>
 <h2>Features</h2>
@@ -128,7 +128,6 @@
 <li>Typed Statistics API: Strongly encapsulated results with .clone(), .equal(), and .toJSON() support.</li>
 </ul>
 <h2>Quick Start</h2>
-<p>See also &quot;/examples&quot; and (or) &quot;/test/units&quot; for more code examples.</p>
 <pre class="prettyprint source lang-js"><code>import { Linq } from '@moyal/js-linq';
 
 const numbers = [1, 2, 3, 4, 5, 6];
@@ -140,15 +139,20 @@ const result = Linq
     .toArray();
 
 console.log(result); // Output: [20, 40, 60]
+
+/*
+
+In this quick start example:
+
+- We filter out odd numbers.
+- We multiply each number in 10.
+- Dumping the result iterable to array.
+
+*/
+
 </code></pre>
-<p>In this quick start example:</p>
-<ul>
-<li>We filter out odd numbers.</li>
-<li>We multiply each number in 10.</li>
-<li>Dumping the result iterable to array.</li>
-</ul>
+<p>For more code examples, see also <strong>&quot;/examples&quot;</strong> and (or) <strong>&quot;/test/units&quot;</strong> in <a href="https://github.com/IlanMoyal/moyal.js.linq">GitHub Repository</a>.</p>
 <h2>API Overview</h2>
-<h2>📘 API Overview</h2>
 <table>
 <thead>
 <tr>
@@ -360,7 +364,7 @@ console.log(result); // Output: [20, 40, 60]
 <p>Access the library version directly:</p>
 <pre class="prettyprint source lang-js"><code>import * as myLib from &quot;@moyal/js-linq&quot;;
 
-myLib.Version // → e.g., &quot;1.0.2&quot;
+myLib.Version // → e.g., &quot;1.0.3&quot;
 </code></pre>
 <h2>License</h2>
 <p>MIT License - free to use, modify, and distribute.</p>

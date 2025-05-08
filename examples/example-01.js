@@ -13,3 +13,13 @@ const result = Linq
     .toArray();
 
 console.log(result); // Output: [20, 40, 60]
+
+/* 
+
+In this quick start example:
+- We filter out odd numbers.
+- We multiply each number in 10.
+- Dumping the result iterable to array.
+
+*/
+ 

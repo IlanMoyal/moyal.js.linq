@@ -81,10 +81,7 @@ Or using **unpkg**:
 - Typed Statistics API: Strongly encapsulated results with .clone(), .equal(), and .toJSON() support.
 
 
-
 ## Quick Start
-
-See also "/examples" and (or) "/test/units" for more code examples.
 
 ```js
 import { Linq } from '@moyal/js-linq';
@@ -98,7 +95,8 @@ const result = Linq
     .toArray();
 
 console.log(result); // Output: [20, 40, 60]
-```
+
+/*
 
 In this quick start example:
 
@@ -106,9 +104,13 @@ In this quick start example:
 - We multiply each number in 10.
 - Dumping the result iterable to array.
 
-## API Overview
+*/
 
-## 📘 API Overview
+```
+
+For more code examples, see also **"/examples"** and (or) **"/test/units"** in [GitHub Repository](https://github.com/IlanMoyal/moyal.js.linq).
+
+## API Overview
 
 | Method / Static | Purpose |
 |----------------|---------|

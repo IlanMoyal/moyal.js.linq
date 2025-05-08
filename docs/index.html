@@ -128,7 +128,6 @@
 <li>Typed Statistics API: Strongly encapsulated results with .clone(), .equal(), and .toJSON() support.</li>
 </ul>
 <h2>Quick Start</h2>
-<p>See also &quot;/examples&quot; and (or) &quot;/test/units&quot; for more code examples.</p>
 <pre class="prettyprint source lang-js"><code>import { Linq } from '@moyal/js-linq';
 
 const numbers = [1, 2, 3, 4, 5, 6];
@@ -140,15 +139,20 @@ const result = Linq
     .toArray();
 
 console.log(result); // Output: [20, 40, 60]
+
+/*
+
+In this quick start example:
+
+- We filter out odd numbers.
+- We multiply each number in 10.
+- Dumping the result iterable to array.
+
+*/
+
 </code></pre>
-<p>In this quick start example:</p>
-<ul>
-<li>We filter out odd numbers.</li>
-<li>We multiply each number in 10.</li>
-<li>Dumping the result iterable to array.</li>
-</ul>
+<p>For more code examples, see also <strong>&quot;/examples&quot;</strong> and (or) <strong>&quot;/test/units&quot;</strong> in <a href="https://github.com/IlanMoyal/moyal.js.linq">GitHub Repository</a>.</p>
 <h2>API Overview</h2>
-<h2>📘 API Overview</h2>
 <table>
 <thead>
 <tr>

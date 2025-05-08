@@ -5,7 +5,7 @@
  * However, under Node environment it is better to execure runner-for-node.js
  */
 
-import {MultiLevelAutoNumbering} from "../src/index.js";
+import { MultiLevelAutoNumbering } from "@moyal/js-test";
 
 import { Portability } from "../scripts/include/portability.js";
 

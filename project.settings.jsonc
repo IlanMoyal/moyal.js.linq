@@ -31,7 +31,7 @@
         "jsdoc-to-markdown": "^9.1.1",
         "rollup": "^3.0.0",
         "docdash": "^2.0.2",
-        "@moyal/js-test": "^2.1.7"
+        "@moyal/js-test": "^2.1.8"
     },
     "git:repository-name": "moyal.js.linq",
     "git:username": "IlanMoyal",

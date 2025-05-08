@@ -6,7 +6,7 @@ Dynamic blocks: {{::command:...::}} resolved at generation time
 
 # {{project:fullname}} 
 
-[![license](https://img.shields.io/npm/l/{{scope}}/{{lib}})](https://github.com/{{git:username}}/{{git:repository-name}}/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/{{scope}}/{{lib}})](https://github.com/{{git:username}}/{{git:repository-name}}/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/{{scope}}/{{lib}})](https://www.npmjs.com/package/{{scope}}/{{lib}})
 [![jsDelivr CDN](https://data.jsdelivr.com/v1/package/npm/{{scope}}/{{lib}}/badge)](https://www.jsdelivr.com/package/npm/{{scope}}/{{lib}})
 [![minzipped size](https://badgen.net/bundlephobia/minzip/{{scope}}/{{lib}})](https://bundlephobia.com/package/{{scope}}/{{lib}})
@@ -30,7 +30,6 @@ Dynamic blocks: {{::command:...::}} resolved at generation time
 - [License](#license)
 - [Author](#author)
 
-<!-- CONTENT -->
 ## Installation
 
 > npm install {{scope}}/{{lib}}
@@ -63,6 +62,7 @@ const { {{exampleExportedName}} } = require("{{scope}}/{{lib}}");
 </script>
 ```
 
+<!-- CONTENT -->
 Or using **unpkg**:
 
 ```html
@@ -82,21 +82,14 @@ import * as myLib from "{{scope}}/{{lib}}";
 myLib.Version // → e.g., "{{version}}"
 ```
 
-## Example files and test files
-
-Example files can be found under `{{examplesFolder}}` folder and/or  `{{testFolder}}/units` folder
-(You can treat these test files as examples)
-
-
 ## License
 
 {{license:short-text}}
 
-## Author
+## Author: {{author}}
 
-**{{author}}**
-Website: [{{author:website}}]({{author:website}})
+> Website: [{{author:website}}]({{author:website}})
 
-GitHub: [{{author}}](https://github.com/{{git:username}})
+> GitHub: [{{author}}](https://github.com/{{git:username}})
 
-LinkedIn: [{{author}}](https://www.linkedin.com/in/{{author:linkedin:username}})
+> LinkedIn: [{{author}}](https://www.linkedin.com/in/{{author:linkedin:username}})

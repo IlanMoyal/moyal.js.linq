@@ -2,7 +2,7 @@
 
 # moyal.js.linq 
 
-[![license](https://img.shields.io/npm/l/@moyal/js-linq)](https://github.com/IlanMoyal/moyal.js.linq/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/@moyal/js-linq)](https://github.com/IlanMoyal/moyal.js.linq/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/@moyal/js-linq)](https://www.npmjs.com/package/@moyal/js-linq)
 [![jsDelivr CDN](https://data.jsdelivr.com/v1/package/npm/@moyal/js-linq/badge)](https://www.jsdelivr.com/package/npm/@moyal/js-linq)
 [![minzipped size](https://badgen.net/bundlephobia/minzip/@moyal/js-linq)](https://bundlephobia.com/package/@moyal/js-linq)
@@ -10,7 +10,7 @@
 A lightweight, zero-dependency JavaScript library that brings LINQ-style querying capabilities to native arrays. Designed for both clarity and performance, it offers a fluent, chainable API for filtering, projecting, grouping, ordering, and aggregating data—without relying on external frameworks.
 
 ## Information
-- **Current Version:** 1.0.1
+- **Current Version:** 1.0.2
 - **Author:** Ilan Moyal
 - **Website:** https://www.moyal.es
 - **License:** MIT
@@ -28,7 +28,6 @@ A lightweight, zero-dependency JavaScript library that brings LINQ-style queryin
 - [License](#license)
 - [Author](#author)
 
-<!-- CONTENT -->
 ## Installation
 
 > npm install @moyal/js-linq
@@ -52,20 +51,21 @@ const { Linq } = require("@moyal/js-linq");
 ```html
 <!-- From jsDelivr CDN (minified version) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.1/dist/moyal.linq.umd.min.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js";
 </script>
 
 <!-- From jsDelivr CDN (non minified version with documentation) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.1/dist/moyal.linq.umd.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.js";
 </script>
 ```
 
+<!-- CONTENT -->
 Or using **unpkg**:
 
 ```html
 <script type="module">
-  import "https://unpkg.com/@moyal/js-linq@1.0.1/dist/moyal.linq.umd.min.js";
+  import "https://unpkg.com/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js";
 </script>
 ```
 
@@ -105,7 +105,6 @@ In this quick start example:
 - We filter out odd numbers.
 - We multiply each number in 10.
 - Dumping the result iterable to array.
-
 
 ## API Overview
 
@@ -171,24 +170,17 @@ Access the library version directly:
 ```js
 import * as myLib from "@moyal/js-linq";
 
-myLib.Version // → e.g., "1.0.1"
+myLib.Version // → e.g., "1.0.2"
 ```
-
-## Example files and test files
-
-Example files can be found under `examples` folder and/or  `test/units` folder
-(You can treat these test files as examples)
-
 
 ## License
 
 MIT License - free to use, modify, and distribute.
 
-## Author
+## Author: Ilan Moyal
 
-**Ilan Moyal**
-Website: [https://www.moyal.es](https://www.moyal.es)
+> Website: [https://www.moyal.es](https://www.moyal.es)
 
-GitHub: [Ilan Moyal](https://github.com/IlanMoyal)
+> GitHub: [Ilan Moyal](https://github.com/IlanMoyal)
 
-LinkedIn: [Ilan Moyal](https://www.linkedin.com/in/ilanam)
+> LinkedIn: [Ilan Moyal](https://www.linkedin.com/in/ilanam)

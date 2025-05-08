@@ -43,7 +43,6 @@ In this quick start example:
 - We multiply each number in 10.
 - Dumping the result iterable to array.
 
-
 ## API Overview
 
 ## 📘 API Overview

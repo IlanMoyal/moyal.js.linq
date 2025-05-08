@@ -9,9 +9,7 @@
 			"type": "node",
 			"program": "${workspaceFolder}/quick-start/example-01.js",
 			"request": "launch",
-			"skipFiles": [
-				"<node_internals>/**"
-			],
+			"skipFiles": ["<node_internals>/**"],
 			"cwd": "${workspaceFolder}",                     // optional: current working directory
 			"console": "integratedTerminal",                 // optional: or "externalTerminal"
 			"runtimeArgs": [
@@ -54,6 +52,18 @@
 			"skipFiles": [
 				"<node_internals>/**"
 			],
+			"cwd": "${workspaceFolder}",                     // optional: current working directory
+			"console": "integratedTerminal",                 // optional: or "externalTerminal"
+			"runtimeArgs": [
+				"--enable-source-maps"                         // optional if you use source maps
+			]
+		},
+		{
+			"name": "Launch Example 05",
+			"type": "node",
+			"program": "${workspaceFolder}/quick-start/example-05.js",
+			"request": "launch",
+			"skipFiles": ["<node_internals>/**"],
 			"cwd": "${workspaceFolder}",                     // optional: current working directory
 			"console": "integratedTerminal",                 // optional: or "externalTerminal"
 			"runtimeArgs": [

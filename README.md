@@ -10,7 +10,7 @@
 A lightweight, zero-dependency JavaScript library that brings LINQ-style querying capabilities to native arrays. Designed for both clarity and performance, it offers a fluent, chainable API for filtering, projecting, grouping, ordering, and aggregating data—without relying on external frameworks.
 
 ## Information
-- **Current Version:** 1.0.2
+- **Current Version:** 1.0.3
 - **Author:** Ilan Moyal
 - **Website:** https://www.moyal.es
 - **License:** MIT
@@ -51,12 +51,12 @@ const { Linq } = require("@moyal/js-linq");
 ```html
 <!-- From jsDelivr CDN (minified version) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.min.js";
 </script>
 
 <!-- From jsDelivr CDN (non minified version with documentation) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.js";
 </script>
 ```
 
@@ -65,7 +65,7 @@ Or using **unpkg**:
 
 ```html
 <script type="module">
-  import "https://unpkg.com/@moyal/js-linq@1.0.2/dist/moyal.linq.umd.min.js";
+  import "https://unpkg.com/@moyal/js-linq@1.0.3/dist/moyal.linq.umd.min.js";
 </script>
 ```
 
@@ -172,7 +172,7 @@ Access the library version directly:
 ```js
 import * as myLib from "@moyal/js-linq";
 
-myLib.Version // → e.g., "1.0.2"
+myLib.Version // → e.g., "1.0.3"
 ```
 
 ## License

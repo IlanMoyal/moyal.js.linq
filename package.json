@@ -1,7 +1,7 @@
 {
   "x-moyal-auto-generated-comment": "THIS IS AN AUTO_GENERATED FILE. DON'T EDIT IT! INSTEAD EDIT build/package.template.jsonc and project.settings.jsonc",
   "name": "@moyal/js-linq",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A lightweight, zero-dependency JavaScript library that brings LINQ-style querying capabilities to native arrays. Designed for both clarity and performance, it offers a fluent, chainable API for filtering, projecting, grouping, ordering, and aggregating data—without relying on external frameworks.",
   "type": "module",
   "main": "./dist/moyal.linq.cjs.js",

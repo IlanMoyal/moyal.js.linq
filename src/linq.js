@@ -883,7 +883,7 @@ class Linq {
 
     /**
      * Inverts the order of the elements in a sequence.
-     * @returns {_sel.Linq} A copy of this sequence in reserve order.
+     * @returns {Linq} A copy of this sequence in reserve order.
      */
     reverse() { return Linq.#_reverse(this.#_thisArg, this); }
 
@@ -899,7 +899,7 @@ class Linq {
     /**
      * Projects each element of this sequence into a new form.
      * @param {Function} [selector] - A n optional transform function to apply to each source element; The first parameter is the element, the second parameter represents the index of the source element. The default selector simply return the item that passed as parameter.
-     * @returns {_self.Linq} A new sequence whose elements are the result of invoking the transform function on each element this sequence.
+     * @returns {Linq} A new sequence whose elements are the result of invoking the transform function on each element this sequence.
      * @throws `selector` must be a function or nullish
      */
     select(selector) { return Linq.#_select(this.#_thisArg, this, selector); }

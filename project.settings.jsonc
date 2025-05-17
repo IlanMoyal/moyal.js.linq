@@ -4,7 +4,7 @@
     "project:fullname": "moyal.js.linq",
     "scope": "@moyal",
     "lib": "js-linq",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A lightweight, zero-dependency JavaScript library that brings LINQ-style querying capabilities to native arrays. Designed for both clarity and performance, it offers a fluent, chainable API for filtering, projecting, grouping, ordering, and aggregating data—without relying on external frameworks.",
     "author": "Ilan Moyal",
     "author:website": "https://www.moyal.es",

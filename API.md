@@ -82,8 +82,8 @@ Linq - A static entry point for LINQ-style operations on arrays.Provides metho
         * [.orderByDescending([keySelector], [comparer])](#Linq+orderByDescending) ⇒ [<code>Linq</code>](#Linq)
         * [.prepend(value)](#Linq+prepend) ⇒ [<code>Linq</code>](#Linq)
         * [.removeNullishes()](#Linq+removeNullishes) ⇒ [<code>Linq</code>](#Linq)
-        * [.reverse()](#Linq+reverse) ⇒ <code>\_sel.Linq</code>
-        * [.select([selector])](#Linq+select) ⇒ <code>\_self.Linq</code>
+        * [.reverse()](#Linq+reverse) ⇒ [<code>Linq</code>](#Linq)
+        * [.select([selector])](#Linq+select) ⇒ [<code>Linq</code>](#Linq)
         * [.selectMany([collectionSelector], [resultSelector])](#Linq+selectMany) ⇒ [<code>Linq</code>](#Linq)
         * [.sequenceEqual(secondIterable, [equalityComparer])](#Linq+sequenceEqual) ⇒ <code>boolean</code>
         * [.single([predicate])](#Linq+single) ⇒ <code>any</code>
@@ -582,18 +582,18 @@ Return a copy of this sequence without the nullish values (null or undefined).
 **Returns**: [<code>Linq</code>](#Linq) - A copy of this sequence without the nullish values (null or undefined).  
 <a name="Linq+reverse"></a>
 
-### linq.reverse() ⇒ <code>\_sel.Linq</code>
+### linq.reverse() ⇒ [<code>Linq</code>](#Linq)
 Inverts the order of the elements in a sequence.
 
 **Kind**: instance method of [<code>Linq</code>](#Linq)  
-**Returns**: <code>\_sel.Linq</code> - A copy of this sequence in reserve order.  
+**Returns**: [<code>Linq</code>](#Linq) - A copy of this sequence in reserve order.  
 <a name="Linq+select"></a>
 
-### linq.select([selector]) ⇒ <code>\_self.Linq</code>
+### linq.select([selector]) ⇒ [<code>Linq</code>](#Linq)
 Projects each element of this sequence into a new form.
 
 **Kind**: instance method of [<code>Linq</code>](#Linq)  
-**Returns**: <code>\_self.Linq</code> - A new sequence whose elements are the result of invoking the transform function on each element this sequence.  
+**Returns**: [<code>Linq</code>](#Linq) - A new sequence whose elements are the result of invoking the transform function on each element this sequence.  
 **Throws**:
 
 - `selector` must be a function or nullish
